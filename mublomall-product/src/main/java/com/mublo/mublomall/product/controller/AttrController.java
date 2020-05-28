@@ -33,6 +33,7 @@ public class AttrController {
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = attrService.queryPage(params);
+int i=9;
         return R.ok().put("page", page);
     }
     @GetMapping("/{attrType}/list/{catId}")
