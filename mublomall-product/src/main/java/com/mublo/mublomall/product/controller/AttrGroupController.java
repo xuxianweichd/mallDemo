@@ -1,18 +1,16 @@
 package com.mublo.mublomall.product.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mublo.common.utils.Query;
+import com.mublo.mublomall.product.entity.AttrEntity;
 import com.mublo.mublomall.product.service.CategoryService;
 import com.mublo.mublomall.product.vo.AttrGroupRelationVo;
+import com.mublo.mublomall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mublo.mublomall.product.entity.AttrGroupEntity;
 import com.mublo.mublomall.product.service.AttrGroupService;
@@ -50,7 +48,7 @@ public class AttrGroupController {
     }
 
     /**
-     * 信息
+     * 查询属性分组信息并包含分类全路径
      */
     @RequestMapping("/info/{attrGroupId}")
     public R info(@PathVariable("attrGroupId") Long attrGroupId){
@@ -61,20 +59,43 @@ public class AttrGroupController {
         return R.ok().put("attrGroup", attrGroup);
     }
     /**
-     * 信息
+     * 获取分类下所有分组&关联属性
+     */
+    @RequestMapping("/{catelogId}/withattr")
+    public R getAttrGroupWithAttrs(@PathVariable("catelogId") Long catelogId){
+        List<AttrGroupWithAttrsVo> vos =  attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+//        AttrGroupEntity attrGroup = attrGroupService.getById(catelogId);
+//        Long catelogId = attrGroup.getCatelogId();
+//        Long[] path=categoryService.findCateLogPath(catelogId);
+//        attrGroup.setCatelogPath(path);
+        return R.ok().put("data",vos);
+    }
+    /**
+     * 查询所有关联的销售属性
      */
     @RequestMapping("/{attrGroupId}/attr/relation")
-    public R attrRelation(Map<String,Object> params ,@PathVariable("attrGroupId") Long attrGroupId){
-        PageUtils page = attrGroupService.getRelationAttr(params,attrGroupId);
+    public R attrRelation(@RequestParam Map<String,Object> params ,@PathVariable("attrGroupId") Long attrGroupId){
+        List<AttrEntity> attrEntity = attrGroupService.getRelationAttr(attrGroupId);
+        IPage<AttrEntity> page=new Query<AttrEntity>().getPage(params);
+        page.setRecords(attrEntity);
         return R.ok().put("page",page);
     }
     /**
-     * 信息
+     * 查询所有非关联的销售属性
      */
     @RequestMapping("/{catelog_id}/noattr/relation")
-    public R attrNoRelation(Map<String,Object> params ,@PathVariable("catelog_id") Long catelog_id){
+    public R attrNoRelation(@RequestParam Map<String,Object> params ,@PathVariable("catelog_id") Long catelog_id){
         PageUtils page = attrGroupService.getNoRelationAttr(params,catelog_id);
         return R.ok().put("page",page);
+    }
+    /**
+     * 新增关联的销售属性
+     */
+    @PostMapping("/attr/relation")
+    public R addAttrRelation(@RequestBody
+    List<AttrGroupRelationVo> attrGroupRelationVoList){
+        attrGroupService.addAttrRelation(attrGroupRelationVoList);
+        return R.ok();
     }
 
     /**
@@ -97,7 +118,7 @@ public class AttrGroupController {
         return R.ok();
     }
     /**
-     * 删除
+     * 批量删除关联链接（中间表）
      */
     @RequestMapping("/relation/delete")
     public R delete(@RequestBody AttrGroupRelationVo[] attrGroupRelationVos){

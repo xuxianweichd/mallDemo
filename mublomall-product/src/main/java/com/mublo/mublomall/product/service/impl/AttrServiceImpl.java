@@ -132,4 +132,40 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 //        })
         attrAttrgroupRelationService.remove(new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_id",attrIds));
     }
+
+    @Override
+    public AttrRespVo getAttrInfo(Long attrId) {
+
+        AttrRespVo respVo = new AttrRespVo();
+        AttrEntity attrEntity = this.getById(attrId);
+        BeanUtils.copyProperties(attrEntity,respVo);
+
+
+
+        if(attrEntity.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()){
+            //1、设置分组信息
+            AttrAttrgroupRelationEntity attrgroupRelation = attrAttrgroupRelationService.getOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrId));
+            if(attrgroupRelation!=null){
+                respVo.setAttrGroupId(attrgroupRelation.getAttrGroupId());
+                AttrGroupEntity attrGroupEntity = attrGroupService.getById(attrgroupRelation.getAttrGroupId());
+                if(attrGroupEntity!=null){
+                    respVo.setGroupName(attrGroupEntity.getAttrGroupName());
+                }
+            }
+        }
+
+
+        //2、设置分类信息
+        Long catelogId = attrEntity.getCatelogId();
+        Long[] catelogPath = categoryService.findCateLogPath(catelogId);
+        respVo.setCatelogPath(catelogPath);
+
+        CategoryEntity categoryEntity = categoryService.getById(catelogId);
+        if(categoryEntity!=null){
+            respVo.setCatelogName(categoryEntity.getName());
+        }
+
+
+        return respVo;
+    }
 }

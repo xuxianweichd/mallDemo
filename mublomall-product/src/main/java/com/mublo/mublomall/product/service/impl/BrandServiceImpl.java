@@ -2,6 +2,7 @@ package com.mublo.mublomall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mublo.common.utils.Constant;
+import com.mublo.mublomall.product.entity.AttrGroupEntity;
 import com.mublo.mublomall.product.entity.CategoryBrandRelationEntity;
 import com.mublo.mublomall.product.service.CategoryBrandRelationService;
 import org.apache.commons.lang.StringUtils;

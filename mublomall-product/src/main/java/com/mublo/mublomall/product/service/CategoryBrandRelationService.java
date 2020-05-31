@@ -2,8 +2,10 @@ package com.mublo.mublomall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mublo.common.utils.PageUtils;
+import com.mublo.mublomall.product.entity.BrandEntity;
 import com.mublo.mublomall.product.entity.CategoryBrandRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,5 +22,7 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
     void saveDetail(CategoryBrandRelationEntity categoryBrandRelation);
 
     void updateCategory(Long catId, String name);
+
+    List<BrandEntity> getBrandsByCatId(Long catId);
 }
 

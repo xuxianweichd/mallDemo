@@ -3,6 +3,7 @@ package com.mublo.mublomall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.mublo.mublomall.product.vo.AttrRespVo;
 import com.mublo.mublomall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,6 @@ public class AttrController {
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = attrService.queryPage(params);
-int i=9;
         return R.ok().put("page", page);
     }
     @GetMapping("/{attrType}/list/{catId}")
@@ -49,9 +49,9 @@ int i=9;
      */
     @RequestMapping("/info/{attrId}")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+        AttrRespVo respVo = attrService.getAttrInfo(attrId);
 
-        return R.ok().put("attr", attr);
+        return R.ok().put("attr", respVo);
     }
 
     /**
