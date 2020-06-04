@@ -84,7 +84,9 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         }).collect(Collectors.toList());
 
         //2.3)、从当前分类的所有属性中移除这些属性；
-        QueryWrapper<AttrEntity> wrapper = new QueryWrapper<AttrEntity>().eq("catelog_id", catelog_id).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
+//        QueryWrapper<AttrEntity> wrapper = new QueryWrapper<AttrEntity>().eq("catelog_id", catelog_id).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
+        QueryWrapper<AttrEntity> wrapper = new QueryWrapper<AttrEntity>().eq("catelog_id", catelog_id).in("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode(),ProductConstant.AttrEnum.ATTR_TYPE_SALE_OR_BASE.getCode());
+
         if (attrIds != null && attrIds.size() > 0) {
             wrapper.notIn("attr_id", attrIds);
         }
@@ -102,12 +104,13 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     }
 
     @Override
-    public List<AttrEntity> getRelationAttr(Long attrGroupId) {
+    public List<AttrEntity> getRelationAttr(Long attrGroupId,boolean choose) {
         List<AttrAttrgroupRelationEntity> attrAttrgroupRelationEntityList = attrAttrgroupRelationService.list(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrGroupId));
 //        if (CollectionUtils.isNotEmpty(attrAttrgroupRelationEntityList)){
 //            attrAttrgroupRelationEntityList
 //        }
 //        QueryWrapper<AttrEntity> attrEntityQueryWrapper=new QueryWrapper<AttrEntity>();
+
         List<AttrEntity> attrEntities=new ArrayList<>();
         if (!attrAttrgroupRelationEntityList.isEmpty()) {
 //            List<AttrEntity> collect = attrAttrgroupRelationEntityList.stream().map(item -> {
@@ -117,7 +120,14 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
                 return item.getAttrId();
             }).collect(Collectors.toList());
 //            attrEntityQueryWrapper.in("attr_id",collect);
-            attrEntities = attrDao.selectBatchIds(collect);
+//            attrEntities = attrDao.selectBatchIds(collect);
+            QueryWrapper<AttrEntity> attrEntityQueryWrapper=new QueryWrapper<AttrEntity>().in("attr_id",collect).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
+            if (choose){
+                attrEntityQueryWrapper.and(attrEntityQueryWrapper1 -> {
+                    attrEntityQueryWrapper1.or().eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_SALE_OR_BASE.getCode());
+                });
+            }
+            attrEntities = attrDao.selectList(attrEntityQueryWrapper);
 //            IPage<AttrEntity> Page =new Page<>();
 //            Page= new Query<AttrEntity>().getPage(params);
 //            Page.setRecords(attrEntities);
@@ -152,7 +162,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         List<AttrGroupWithAttrsVo> collect = attrGroupEntities.stream().map(item -> {
             AttrGroupWithAttrsVo attrGroupWithAttrsVo = new AttrGroupWithAttrsVo();
             BeanUtils.copyProperties(item, attrGroupWithAttrsVo);
-            List<AttrEntity> attrEntities = this.getRelationAttr(item.getAttrGroupId());
+            List<AttrEntity> attrEntities = this.getRelationAttr(item.getAttrGroupId(),false);
             attrGroupWithAttrsVo.setAttrs(attrEntities);
             return attrGroupWithAttrsVo;
         }).collect(Collectors.toList());

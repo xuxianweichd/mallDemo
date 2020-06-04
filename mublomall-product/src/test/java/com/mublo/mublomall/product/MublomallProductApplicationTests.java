@@ -54,17 +54,35 @@ class MublomallProductApplicationTests {
 //        list.forEach(item -> {
 //            System.out.println(item);
 //        });
+        long start = System.currentTimeMillis();
+        System.out.println("开始时间"+start);
+//        List<String> list = ImmutableList.of("Hollis","hollischuang","Java干货");
+        List<String> list = new ArrayList<>();
+        for (int i=0;i<500000;i++){
+            list.add(String.valueOf(i));
+        }
+//        StringBuilder stringBuilder=new StringBuilder(288888);
+//        List<String> lis=list.stream().map((item)->{
+//            return stringBuilder.append(item+",").toString();
+//        }).collect(Collectors.toList());
+//            String val=list.stream().reduce((a,b)->{
+//                return stringBuilder.append(b+",").toString();
+//            }).get();
+//        System.out.println(val);
+//        System.out.println(val.length());
+//        System.out.println(list.stream().collect(Collectors.joining(":")).toString());
 
-        List<String> list = ImmutableList.of("Hollis","hollischuang","Java干货");
-        list.stream().collect(Collectors.joining(":"));
-        System.out.println(list.toString());
+//        System.out.println(list.toString());
 //        CollectorImpl CollectorImpl=new CollectorImpl();
-        System.out.println(Collectors.joining(":").toString());
+//        System.out.println(Collectors.joining(":").toString());
 //        StringJoiner sj1 = new StringJoiner(":","[","]");
 //        sj1.add("Hollis").add("hollischuang").add("Java干货");
 //        sj1.toString();
 
-//        String.join(",",list);
+        System.out.println(String.join(",",list).toString());;
+        long end = System.currentTimeMillis();
+        System.out.println("结束时间"+end);
+        System.out.println("用时"+(end-start));
     }
 
 }

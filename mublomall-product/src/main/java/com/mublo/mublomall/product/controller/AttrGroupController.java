@@ -71,17 +71,17 @@ public class AttrGroupController {
         return R.ok().put("data",vos);
     }
     /**
-     * 查询所有关联的销售属性
+     * 查询所有关联的基本属性
      */
-    @RequestMapping("/{attrGroupId}/attr/relation")
-    public R attrRelation(@RequestParam Map<String,Object> params ,@PathVariable("attrGroupId") Long attrGroupId){
-        List<AttrEntity> attrEntity = attrGroupService.getRelationAttr(attrGroupId);
+    @RequestMapping("/{attrGroupId}/attr/relation/{choose}")
+    public R attrRelation(@RequestParam Map<String,Object> params ,@PathVariable("attrGroupId") Long attrGroupId,@PathVariable("choose") boolean choose){
+        List<AttrEntity> attrEntity = attrGroupService.getRelationAttr(attrGroupId,choose);
         IPage<AttrEntity> page=new Query<AttrEntity>().getPage(params);
         page.setRecords(attrEntity);
         return R.ok().put("page",page);
     }
     /**
-     * 查询所有非关联的销售属性
+     * 查询所有非关联的基本属性
      */
     @RequestMapping("/{catelog_id}/noattr/relation")
     public R attrNoRelation(@RequestParam Map<String,Object> params ,@PathVariable("catelog_id") Long catelog_id){
@@ -89,7 +89,7 @@ public class AttrGroupController {
         return R.ok().put("page",page);
     }
     /**
-     * 新增关联的销售属性
+     * 新增关联的属性
      */
     @PostMapping("/attr/relation")
     public R addAttrRelation(@RequestBody

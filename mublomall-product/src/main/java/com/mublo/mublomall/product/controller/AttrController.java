@@ -1,17 +1,14 @@
 package com.mublo.mublomall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
+import com.mublo.common.utils.PageUtils;
+import com.mublo.common.utils.R;
+import com.mublo.mublomall.product.service.AttrService;
 import com.mublo.mublomall.product.vo.AttrRespVo;
 import com.mublo.mublomall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.mublo.mublomall.product.entity.AttrEntity;
-import com.mublo.mublomall.product.service.AttrService;
-import com.mublo.common.utils.PageUtils;
-import com.mublo.common.utils.R;
+import java.util.Map;
 
 
 
@@ -68,9 +65,9 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
-
+    public R update(@RequestBody AttrVo attrVo){
+//		attrService.updateById(attr);
+        attrService.updateAttr(attrVo);
         return R.ok();
     }
 
