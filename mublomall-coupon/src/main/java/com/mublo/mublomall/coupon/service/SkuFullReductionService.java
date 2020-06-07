@@ -2,6 +2,7 @@ package com.mublo.mublomall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mublo.common.utils.PageUtils;
+import com.mublo.common.utils.to.SkuReductionTo;
 import com.mublo.mublomall.coupon.entity.SkuFullReductionEntity;
 
 import java.util.Map;
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface SkuFullReductionService extends IService<SkuFullReductionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveinfo(SkuReductionTo skuReductionTo);
 }
 

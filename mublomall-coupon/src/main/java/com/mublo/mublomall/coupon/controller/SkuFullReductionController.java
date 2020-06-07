@@ -3,6 +3,7 @@ package com.mublo.mublomall.coupon.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.mublo.common.utils.to.SkuReductionTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,6 +58,15 @@ public class SkuFullReductionController {
     @RequestMapping("/save")
     public R save(@RequestBody SkuFullReductionEntity skuFullReduction){
 		skuFullReductionService.save(skuFullReduction);
+
+        return R.ok();
+    }
+    /**
+     * 保存
+     */
+    @RequestMapping("/saveinfo")
+    public R saveinfo(@RequestBody SkuReductionTo skuReductionTo){
+        skuFullReductionService.saveinfo(skuReductionTo);
 
         return R.ok();
     }

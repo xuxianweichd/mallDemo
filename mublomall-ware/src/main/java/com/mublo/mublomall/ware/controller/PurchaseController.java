@@ -3,6 +3,7 @@ package com.mublo.mublomall.ware.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.mublo.mublomall.ware.vo.MergeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,13 @@ public class PurchaseController {
 
         return R.ok().put("page", page);
     }
+    @RequestMapping("/unreceive/list")
+    //@RequiresPermissions("ware:purchase:list")
+    public R unreceivelist(@RequestParam Map<String, Object> params){
+        PageUtils page = purchaseService.queryPageUnreceivePurchase(params);
 
+        return R.ok().put("page", page);
+    }
 
     /**
      * 信息
@@ -57,7 +64,14 @@ public class PurchaseController {
     @RequestMapping("/save")
     public R save(@RequestBody PurchaseEntity purchase){
 		purchaseService.save(purchase);
-
+        return R.ok();
+    }
+    /**
+     * 保存
+     */
+    @RequestMapping("/merge")
+    public R merge(@RequestBody MergeVo mergeVo){
+        purchaseService.mergePurchase(mergeVo);
         return R.ok();
     }
 

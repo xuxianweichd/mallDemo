@@ -1,9 +1,15 @@
 package com.mublo.mublomall.product.service.impl;
 
 import com.alibaba.nacos.client.utils.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mublo.common.utils.PageUtils;
+import com.mublo.common.utils.Query;
 import com.mublo.common.utils.R;
 import com.mublo.common.utils.to.SkuReductionTo;
 import com.mublo.common.utils.to.SpuBoundTo;
+import com.mublo.mublomall.product.dao.SpuInfoDao;
 import com.mublo.mublomall.product.entity.*;
 import com.mublo.mublomall.product.feign.CouponFeignService;
 import com.mublo.mublomall.product.service.*;
@@ -11,21 +17,13 @@ import com.mublo.mublomall.product.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mublo.common.utils.PageUtils;
-import com.mublo.common.utils.Query;
-
-import com.mublo.mublomall.product.dao.SpuInfoDao;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("spuInfoService")
@@ -89,7 +87,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 //        spuImagesService.saveImages(infoEntity.getId(),images);
         List<SpuImagesEntity> spuImagesEntityList = images.stream().map(item -> {
             SpuImagesEntity spuImagesEntity = new SpuImagesEntity();
-//            BeanUtils.copyProperties();
             spuImagesEntity.setSpuId(infoEntity.getId());
             spuImagesEntity.setImgUrl(item);
             return spuImagesEntity;
@@ -101,8 +98,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<ProductAttrValueEntity> collect = baseAttrs.stream().map(attr -> {
             ProductAttrValueEntity valueEntity = new ProductAttrValueEntity();
             valueEntity.setAttrId(attr.getAttrId());
-            AttrEntity id = attrService.getById(attr.getAttrId());
-            valueEntity.setAttrName(id.getAttrName());
+//            AttrEntity id = attrService.getById(attr.getAttrId());
+            valueEntity.setAttrName(attr.getAttrName());
             valueEntity.setAttrValue(attr.getAttrValues());
             valueEntity.setQuickShow(attr.getShowDesc());
             valueEntity.setSpuId(infoEntity.getId());
@@ -179,7 +176,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 SkuReductionTo skuReductionTo = new SkuReductionTo();
                 BeanUtils.copyProperties(item, skuReductionTo);
                 skuReductionTo.setSkuId(skuId);
-                if (skuReductionTo.getFullCount() > 0 || skuReductionTo.getFullPrice().compareTo(new BigDecimal("0")) == 1) {
+                if (skuReductionTo.getFullCount() > 0 || skuReductionTo.getFullPrice().compareTo(BigDecimal.ZERO) == 1) {
                     R r1 = couponFeignService.saveSkuReduction(skuReductionTo);
                     if (r1.getCode() != 0) {
                         log.error("远程保存sku优惠信息失败");
@@ -196,6 +193,47 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Override
     public void saveBaseSpuInfo(SpuInfoEntity infoEntity) {
         this.baseMapper.insert(infoEntity);
+    }
+
+    @Override
+    public PageUtils queryPageByCondition(Map<String, Object> params) {
+        QueryWrapper<SpuInfoEntity> wrapper = new QueryWrapper<>();
+
+        String key = (String) params.get("key");
+        if(!StringUtils.isEmpty(key)){
+            wrapper.and((w)->{
+                w.eq("id",key).or().like("spu_name",key);
+            });
+        }
+        // status=1 and (id=1 or spu_name like xxx)
+        String status = (String) params.get("status");
+        if(!StringUtils.isEmpty(status)){
+            wrapper.eq("publish_status",status);
+        }
+
+        String brandId = (String) params.get("brandId");
+        if(!StringUtils.isEmpty(brandId)&&!"0".equalsIgnoreCase(brandId)){
+            wrapper.eq("brand_id",brandId);
+        }
+
+        String catelogId = (String) params.get("catelogId");
+        if(!StringUtils.isEmpty(catelogId)&&!"0".equalsIgnoreCase(catelogId)){
+            wrapper.eq("catalog_id",catelogId);
+        }
+
+        /**
+         * status: 2
+         * key:
+         * brandId: 9
+         * catelogId: 225
+         */
+
+        IPage<SpuInfoEntity> page = this.page(
+                new Query<SpuInfoEntity>().getPage(params),
+                wrapper
+        );
+
+        return new PageUtils(page);
     }
 
 

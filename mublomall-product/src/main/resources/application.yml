@@ -16,6 +16,10 @@
 #        endpoint: oss-cn-hangzhou.aliyuncs.com
 #  application:
 #    name: mublomall-product
+#  # 配置json时间格式
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#
 #
 ##  classpath*代表扫描所有包的类路径
 #mybatis-plus:

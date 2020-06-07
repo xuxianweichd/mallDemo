@@ -15,6 +15,10 @@ import lombok.Data;
 public class BaseAttrs {
 
     private Long attrId;
+    /**
+     * 属性名
+     */
+    private String attrName;
     private String attrValues;
     private int showDesc;
 
