@@ -8,8 +8,11 @@
 
 package com.mublo.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.apache.http.HttpStatus;
 
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +21,46 @@ import java.util.Map;
  *
  * @author Mark sunlightcs@gmail.com
  */
+
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
-	
+
+//	/**
+//	 * 泛型类的使用//R<T>
+//	 */
+//	private T data;
+//
+//	public T getData() {
+//		return data;
+//	}
+//
+//	public void setData(T data) {
+//		this.data = data;
+//	}
+
+	/**
+	 * 泛型转换方式之json转换
+	 */
+	public <T> T  getData(String key, TypeReference<T> tTypeReference){
+		Object data = get(key);
+		String jsonString = JSON.toJSONString(data);
+		T t = JSON.parseObject(jsonString, tTypeReference);
+		return t;
+	}
+	public <T> T  getData(TypeReference<T> tTypeReference){
+		return getData("data",tTypeReference);
+	}
+	public Object getEntityValue(String EntityName,String key){
+		Map<String,Object> data = (Map<String, Object>) get(EntityName);
+		if (getCode()==0 && !data.isEmpty()){
+			return data.get(key);
+		}
+		return null;
+	}
+	public R setData(Object data){
+		put("data",data);
+		return this;
+	}
 	public R() {
 		put("code", 0);
 		put("msg", "success");

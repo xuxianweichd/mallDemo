@@ -16,6 +16,21 @@
         <result property="catelogId" column="catelog_id"/>
         <result property="showDesc" column="show_desc"/>
     </resultMap>
+<!--    <select id="selectSearchAttrIds" resultType="java.lang.Long">-->
+<!--        SELECT attr_id FROM pms_attr WHERE attr_id IN-->
+<!--        <foreach collection="attrIds" item="attrid" separator="," close=")" open="(">-->
+<!--            #{attrid}-->
+<!--        </foreach>-->
+<!--        AND search_type = 1-->
+<!--    </select>-->
+    <!--SELECT attr_id FROM gulimall_pms.pms_attr where attr_id in (13,14) and search_type = 1;-->
+    <select id="selectSearchAttrIds" resultType="java.lang.Long">
+        SELECT attr_id FROM pms_attr
+        WHERE attr_id IN
+        <foreach collection="baseAttrsIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        AND search_type = 1
 
-
+    </select>
 </mapper>

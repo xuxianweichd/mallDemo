@@ -16,3 +16,60 @@
 #        - access-control-max-age
 #        - X-Frame-Options
 #      mapping: /website/**
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: baidu-route
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url,baidu
+        - id: qq-route
+          uri: https://www.qq.com
+          predicates:
+            - Query=url,qq
+        - id: product_route
+          uri: lb://mublomall-product
+          predicates:
+            - Path=/api/product/**
+            - Host=**.mublomall.com,mublomall.com
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: member_route
+          uri: lb://mublomall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: ware_route
+          uri: lb://mublomall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: third-party_route
+          uri: lb://mublomall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+        - id: admin_route
+          # 已api为开头的请求都转发到renren-fast服务端口
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          # 举例请求/api/mublo/的会转发到/renren-fast/mublo/
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+#        - id: product_route
+#            uri: lb://mublomall-product
+#            predicates:
+#              - Path=/api/product/**
+#            filters:
+#              - RewritePath=/api/(?<segment>.*),/$\{segment}
+  application:
+    name: mublomall-geteway
+

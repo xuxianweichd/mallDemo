@@ -5,13 +5,24 @@
 #    password: root
 #    url: jdbc:mysql://192.168.56.10:3306/mublomall_pms
 #    driver-class-name: com.mysql.cj.jdbc.Driver
+#  cache:
+#    #    cache-names:
+#    type: redis
+#    redis:
+#      time-to-live: 3600000
+##      不指定前缀的默认前缀
+#      key-prefix: CACHE
+##      是否使用默认前缀
+#      use-key-prefix: true
+##      是否缓存空值，防止缓存穿透
+#      cache-null-values: true
 #  cloud:
 #    nacos:
 #      discovery:
 #        server-addr: 127.0.0.1:8848
 #    alicloud:
-#      access-key: LTAI4G2Vb9kAH8YsfZKN79yZ
-#      secret-key: qerlYHCH0qzHnLuRJmbThVJpkyKlDH
+#      access-key: LTAI4G2Vb9kAH8YsfZKN79yZDemo
+#      secret-key: qerlYHCH0qzHnLuRJmbThVJpkyKlDHDemo
 #      oss:
 #        endpoint: oss-cn-hangzhou.aliyuncs.com
 #  application:
@@ -19,18 +30,25 @@
 #  # 配置json时间格式
 #  jackson:
 #    date-format: yyyy-MM-dd HH:mm:ss
-#
-#
+##  配置thymeleaf是否开启缓存
+#  thymeleaf:
+#    cache: false
 ##  classpath*代表扫描所有包的类路径
+#  redis:
+#    host: 192.168.56.10
+#    port: 6379
+##    如果redis有密码在配置
+##    password:
 #mybatis-plus:
 #  mapper-locations: classpath:/mapper/**/*.xml
 #  global-config:
 #    db-config:
 #      id-type: auto
 ##      logic-delete-value: 1
-#server:
-#  port: 11000
+server:
+  port: 11000
 ##      logic-not-delete-value: 0
 #logging:
 #  level:
 #    com.mublo.mublomall: debug
+

@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -120,7 +121,13 @@ class MublomallProductApplicationTests {
 //        System.out.println((Integer) test[0]);
 //        test[0]=2;
 //        System.out.println((Integer) test[0]);
-
+        String one="{'itemId':";
+        String two=",'status':3,'reason':''},";
+        String all="";
+        for (int i=7;i<33;i++){
+            all+=one+i+two;
+        }
+        System.out.println(all);
         long end = System.currentTimeMillis();
         System.out.println("结束时间"+end);
         System.out.println("用时"+(end-start));

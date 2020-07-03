@@ -1,19 +1,14 @@
 package com.mublo.mublomall.ware.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.mublo.mublomall.ware.entity.WareInfoEntity;
-import com.mublo.mublomall.ware.service.WareInfoService;
 import com.mublo.common.utils.PageUtils;
 import com.mublo.common.utils.R;
+import com.mublo.mublomall.ware.entity.WareInfoEntity;
+import com.mublo.mublomall.ware.service.WareInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -29,6 +24,7 @@ import com.mublo.common.utils.R;
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
+
 
     /**
      * 列表

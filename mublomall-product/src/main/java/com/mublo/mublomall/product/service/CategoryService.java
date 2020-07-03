@@ -3,6 +3,7 @@ package com.mublo.mublomall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mublo.common.utils.PageUtils;
 import com.mublo.mublomall.product.entity.CategoryEntity;
+import com.mublo.mublomall.product.vo.Catelog2Vo;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +26,9 @@ public interface CategoryService extends IService<CategoryEntity> {
     Long[] findCateLogPath(Long catelogId);
 
     void updateDetail(CategoryEntity category);
+
+    List<CategoryEntity> getCategorysLevelOne();
+
+    Map<String, List<Catelog2Vo>> getCatalogJson();
 }
 

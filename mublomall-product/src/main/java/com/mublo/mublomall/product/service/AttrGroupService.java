@@ -6,6 +6,7 @@ import com.mublo.mublomall.product.entity.AttrEntity;
 import com.mublo.mublomall.product.entity.AttrGroupEntity;
 import com.mublo.mublomall.product.vo.AttrGroupRelationVo;
 import com.mublo.mublomall.product.vo.AttrGroupWithAttrsVo;
+import com.mublo.mublomall.product.vo.SpuItemAttrGroupVo;
 
 import java.util.List;
 import java.util.Map;
@@ -30,5 +31,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     void addAttrRelation(List<AttrGroupRelationVo> attrGroupRelationVoList);
 
     List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
+
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId);
 }
 

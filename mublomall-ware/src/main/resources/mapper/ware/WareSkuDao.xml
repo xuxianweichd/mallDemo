@@ -3,7 +3,7 @@
 
 <mapper namespace="com.mublo.mublomall.ware.dao.WareSkuDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.mublo.mublomall.ware.entity.WareSkuEntity" id="wareSkuMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
@@ -12,6 +12,16 @@
         <result property="skuName" column="sku_name"/>
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
-
-
+<!--    暂时弃用-->
+    <select id="getSkuStock" resultType="java.lang.Long">
+        SELECT SUM(stock - stock_locked) FROM wms_ware_sku where sku_id =#{item};
+    </select>
+<!--    SELECT w.sku_id ,SUM(stock - stock_locked) has_stock  FROM wms_ware_sku w where w.sku_id in ( 5 , 10 ) Group by w.sku_id-->
+    <select id="getSkusStock" resultType="com.mublo.common.utils.to.SkuHasStockVo">
+        SELECT SUM(stock - stock_locked) has_stock,sku_id FROM wms_ware_sku where sku_id in
+        <foreach collection="skuIds" item="skuId" open="(" close=")" separator=",">
+            #{skuId}
+        </foreach>
+        Group by sku_id
+    </select>
 </mapper>

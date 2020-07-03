@@ -1,9 +1,12 @@
 package com.mublo.mublomall.ware.controller;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.mublo.mublomall.ware.vo.MergeVo;
+import com.mublo.mublomall.ware.vo.PurchaseDoneVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,12 +43,40 @@ public class PurchaseController {
 
         return R.ok().put("page", page);
     }
+
+    /**
+     * 查找所有没有被分配的采购单
+     * @param params
+     * @return
+     */
     @RequestMapping("/unreceive/list")
     //@RequiresPermissions("ware:purchase:list")
     public R unreceivelist(@RequestParam Map<String, Object> params){
         PageUtils page = purchaseService.queryPageUnreceivePurchase(params);
 
         return R.ok().put("page", page);
+    }
+    /**
+     * 领取采购单
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/received")
+    //@RequiresPermissions("ware:purchase:list")
+    public R received(@RequestBody List<Long> ids){
+        purchaseService.received(ids);
+        return R.ok();
+    }
+    /**
+     * 完成采购单
+     * @param purchaseDoneVo
+     * @return
+     */
+    @RequestMapping("/done")
+    //@RequiresPermissions("ware:purchase:list")
+    public R done(@RequestBody PurchaseDoneVo purchaseDoneVo){
+        purchaseService.done(purchaseDoneVo);
+        return R.ok();
     }
 
     /**
@@ -63,11 +94,13 @@ public class PurchaseController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody PurchaseEntity purchase){
+        purchase.setCreateTime(new Date());
+        purchase.setUpdateTime(new Date());
 		purchaseService.save(purchase);
         return R.ok();
     }
     /**
-     * 保存
+     * 合并采购需求为采购单
      */
     @RequestMapping("/merge")
     public R merge(@RequestBody MergeVo mergeVo){

@@ -1,5 +1,8 @@
 package com.mublo.common.utils.constant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WareConstant {
 
     public enum  PurchaseStatusEnum{
@@ -8,7 +11,6 @@ public class WareConstant {
         HASERROR(4,"有异常");
         private int code;
         private String msg;
-
         PurchaseStatusEnum(int code,String msg){
             this.code = code;
             this.msg = msg;
@@ -16,6 +18,19 @@ public class WareConstant {
 
         public int getCode() {
             return code;
+        }
+        public static List<Integer> getReceive() {
+            List<Integer> list = new ArrayList<>();
+            list.add(PurchaseStatusEnum.CREATED.getCode());
+            list.add(PurchaseStatusEnum.ASSIGNED.getCode());
+            return list;
+        }
+        public static List<Integer> getNoReceive() {
+            List<Integer> list = new ArrayList<>();
+            list.add(PurchaseStatusEnum.RECEIVE.getCode());
+            list.add(PurchaseStatusEnum.FINISH.getCode());
+            list.add(PurchaseStatusEnum.HASERROR.getCode());
+            return list;
         }
 
         public String getMsg() {
@@ -42,6 +57,19 @@ public class WareConstant {
 
         public String getMsg() {
             return msg;
+        }
+        public static List<Integer> getReceive() {
+            List<Integer> list = new ArrayList<>();
+            list.add(PurchaseDetailStatusEnum.CREATED.getCode());
+            list.add(PurchaseDetailStatusEnum.ASSIGNED.getCode());
+            return list;
+        }
+        public static List<Integer> getNoReceive() {
+            List<Integer> list = new ArrayList<>();
+            list.add(PurchaseDetailStatusEnum.BUYING.getCode());
+            list.add(PurchaseDetailStatusEnum.FINISH.getCode());
+            list.add(PurchaseDetailStatusEnum.HASERROR.getCode());
+            return list;
         }
     }
 }

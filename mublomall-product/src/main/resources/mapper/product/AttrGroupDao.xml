@@ -12,6 +12,23 @@
         <result property="icon" column="icon"/>
         <result property="catelogId" column="catelog_id"/>
     </resultMap>
+    <resultMap id="spuAttrGroup" type="com.mublo.mublomall.product.vo.SpuItemAttrGroupVo">
+        <result property="groupName" column="attr_group_name"/>
+        <collection property="attrs" ofType="com.mublo.mublomall.product.vo.Attr">
+            <result property="attrId" column="attr_id"></result>
+            <result property="attrName" column="attr_name"></result>
+            <result property="attrValue" column="attr_value"></result>
+        </collection>
+    </resultMap>
+<!--    TODO 级联查询写法 根据所有商品链（spu）的id ->product.spu_id 查询商品链的规格参数表，获取到关联的规格参数id ->product.attr_id 来查询属性组和规格参数关联中间表中关联的属性组id以此类推-->
+<!-- TODO 在大数据的情况下多表联查非常影响性能虽然节省网络资源，但是现代网络资源发展起来了（网速变快，网宽变大）所以数据库的性能更吃紧-->
+    <select id="getAttrGroupWithAttrsBySpuId" resultMap="spuAttrGroup">
+        select product.spu_id,pag.attr_group_id,pag.attr_group_name,product.attr_id,product.attr_name,product.attr_value
+        from pms_product_attr_value product
+        left join pms_attr_attrgroup_relation paar on product.attr_id = paar.attr_id
+        left join pms_attr_group pag on paar.attr_group_id = pag.attr_group_id
+        where product.spu_id=#{spuId};
+    </select>
 
 
 </mapper>

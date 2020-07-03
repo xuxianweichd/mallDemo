@@ -3,7 +3,9 @@ package com.mublo.mublomall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mublo.common.utils.PageUtils;
 import com.mublo.mublomall.product.entity.SkuSaleAttrValueEntity;
+import com.mublo.mublomall.product.vo.Attr;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<Attr> getSaleAttrsBySpuId(Long spuId);
 }
 

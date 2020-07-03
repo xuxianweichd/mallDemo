@@ -18,5 +18,6 @@
         <module>renren-generator</module>
         <module>mublomall-common</module>
         <module>mublomall-gateway</module>
+        <module>mublomall-search</module>
     </modules>
 </project>

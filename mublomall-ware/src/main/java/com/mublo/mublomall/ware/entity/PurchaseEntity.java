@@ -48,7 +48,7 @@ public class PurchaseEntity implements Serializable {
 	/**
 	 * 仓库id
 	 */
-	private Long wareId;
+	private String wareId;
 	/**
 	 * 总金额
 	 */

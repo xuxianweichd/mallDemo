@@ -17,6 +17,7 @@ import com.mublo.mublomall.product.service.AttrService;
 import com.mublo.mublomall.product.service.CategoryBrandRelationService;
 import com.mublo.mublomall.product.vo.AttrGroupRelationVo;
 import com.mublo.mublomall.product.vo.AttrGroupWithAttrsVo;
+import com.mublo.mublomall.product.vo.SpuItemAttrGroupVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,6 +168,11 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
             return attrGroupWithAttrsVo;
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    @Override
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId) {
+        return baseMapper.getAttrGroupWithAttrsBySpuId(spuId);
     }
 
 

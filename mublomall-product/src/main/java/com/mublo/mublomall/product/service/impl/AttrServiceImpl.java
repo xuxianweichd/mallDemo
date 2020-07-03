@@ -2,12 +2,8 @@ package com.mublo.mublomall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mublo.common.utils.constant.ProductConstant;
-import com.mublo.mublomall.product.entity.AttrAttrgroupRelationEntity;
-import com.mublo.mublomall.product.entity.AttrGroupEntity;
-import com.mublo.mublomall.product.entity.CategoryEntity;
-import com.mublo.mublomall.product.service.AttrAttrgroupRelationService;
-import com.mublo.mublomall.product.service.AttrGroupService;
-import com.mublo.mublomall.product.service.CategoryService;
+import com.mublo.mublomall.product.entity.*;
+import com.mublo.mublomall.product.service.*;
 import com.mublo.mublomall.product.vo.AttrRespVo;
 import com.mublo.mublomall.product.vo.AttrVo;
 import org.springframework.beans.BeanUtils;
@@ -28,8 +24,6 @@ import com.mublo.common.utils.PageUtils;
 import com.mublo.common.utils.Query;
 
 import com.mublo.mublomall.product.dao.AttrDao;
-import com.mublo.mublomall.product.entity.AttrEntity;
-import com.mublo.mublomall.product.service.AttrService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -39,12 +33,13 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     private final AttrAttrgroupRelationService attrAttrgroupRelationService;
     private final AttrGroupService attrGroupService;
     private final CategoryService categoryService;
-
+    private final ProductAttrValueService productAttrValueService;
     @Autowired
-    public AttrServiceImpl(AttrAttrgroupRelationService attrAttrgroupRelationService, AttrGroupService attrGroupService, CategoryService categoryService) {
+    public AttrServiceImpl(AttrAttrgroupRelationService attrAttrgroupRelationService, AttrGroupService attrGroupService, CategoryService categoryService, ProductAttrValueService productAttrValueService) {
         this.attrAttrgroupRelationService = attrAttrgroupRelationService;
         this.attrGroupService = attrGroupService;
         this.categoryService = categoryService;
+        this.productAttrValueService = productAttrValueService;
     }
 
     @Override
@@ -250,4 +245,10 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             }
         }
     }
+
+    @Override
+    public List<Long> selectSearchAttrIds(List<Long> attrIds) {
+        return this.baseMapper.selectSearchAttrIds(attrIds);
+    }
+
 }
