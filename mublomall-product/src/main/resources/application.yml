@@ -22,7 +22,7 @@
 #        server-addr: 127.0.0.1:8848
 #    alicloud:
 #      access-key: LTAI4G2Vb9kAH8YsfZKN79yZDemo
-#      secret-key: qerlYHCH0qzHnLuRJmbThVJpkyKlDHDemo
+#      secret-key: qerlYHCH0qzHnLuRJmbThVJpkyKlDHDem
 #      oss:
 #        endpoint: oss-cn-hangzhou.aliyuncs.com
 #  application:
