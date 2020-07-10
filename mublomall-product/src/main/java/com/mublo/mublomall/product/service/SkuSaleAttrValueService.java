@@ -1,9 +1,16 @@
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-07-07 17:23
+ */
+
 package com.mublo.mublomall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mublo.common.utils.PageUtils;
 import com.mublo.mublomall.product.entity.SkuSaleAttrValueEntity;
-import com.mublo.mublomall.product.vo.Attr;
+import com.mublo.mublomall.product.vo.SkuSaleAttrVo;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +26,6 @@ public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity
 
     PageUtils queryPage(Map<String, Object> params);
 
-    List<Attr> getSaleAttrsBySpuId(Long spuId);
+    List<SkuSaleAttrVo> getSaleAttrsBySpuId(Long spuId);
 }
 

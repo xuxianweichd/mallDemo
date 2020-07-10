@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-07-07 17:23
+ */
+
 package com.mublo.mublomall.product.vo;
 
 
@@ -21,7 +28,7 @@ public class SkuItemVo {
 
 
     //3. 获取SPU销售信属性组合
-    List<Attr> saleAttr;
+    List<SkuSaleAttrVo> saleAttr;
 
     //4. 获取SPU的介绍
     SpuInfoDescEntity desp;

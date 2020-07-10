@@ -1,8 +1,15 @@
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-07-07 17:23
+ */
+
 package com.mublo.mublomall.product.dao;
 
-import com.mublo.mublomall.product.entity.SkuSaleAttrValueEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.mublo.mublomall.product.vo.Attr;
+import com.mublo.mublomall.product.entity.SkuSaleAttrValueEntity;
+import com.mublo.mublomall.product.vo.SkuSaleAttrVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +25,5 @@ import java.util.List;
 @Mapper
 public interface SkuSaleAttrValueDao extends BaseMapper<SkuSaleAttrValueEntity> {
 
-    List<Attr> getSaleAttrsBySpuId(@Param("spuId") Long spuId);
+    List<SkuSaleAttrVo> getSaleAttrsBySpuId(@Param("spuId") Long spuId);
 }

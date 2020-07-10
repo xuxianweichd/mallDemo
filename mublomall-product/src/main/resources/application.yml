@@ -47,6 +47,11 @@
 ##      logic-delete-value: 1
 server:
   port: 11000
+#mublomall:
+#  thread:
+#    core-pool-size: 20
+#    max-pool-size: 100
+#    keep-alive-time: 60
 ##      logic-not-delete-value: 0
 #logging:
 #  level:

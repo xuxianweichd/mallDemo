@@ -1,9 +1,8 @@
-/**
- * Copyright (c) 2018 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-04-29 18:39
  */
 
 package io.renren.datasource.properties;

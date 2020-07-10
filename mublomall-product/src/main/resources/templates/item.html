@@ -1,3 +1,10 @@
+<!--
+  ~ Copyright (c) 2020.
+  ~ 作者：mublo
+  ~ 邮箱：XuXianYu.Transo@outlook.com
+  ~ 日期：2020-07-07 17:23
+  -->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -57,8 +64,8 @@
 							</li>
 						</ul>
 						<ul class="header_ul_right">
-							<li style="border: 0;"><a href="/static/Product/item/../登录页面\index.html" class="aa">你好，请登录</a></li>
-							<li><a href="/static/Product/item/../注册页面\index.html" style="color: red;">免费注册</a> |</li>
+							<li style="border: 0;"><a href="http://auth.mublomall.com/login.html" class="aa">你好，请登录</a></li>
+							<li><a href="http://auth.mublomall.com/reg.html" style="color: red;">免费注册</a> |</li>
 							<li><a href="/static/Product/item/javascript:;" class="aa">我的订单</a> |</li>
 							<li class="jingdong"><a href="/static/Product/item/javascript:;">我的京东</a><span class="glyphicon glyphicon-menu-down">|</span>
 								<ol class="jingdong_ol">
@@ -591,13 +598,13 @@
 								</li>
 							</ul>
 						</div>
-						<div class="box-attr-3" th:each="sale:${ItemVo.saleAttr}">
-							<div class="box-attr clear">
+						<div class="box-attr-3">
+							<div class="box-attr clear" th:each="sale:${ItemVo.saleAttr}">
 								<dl>
-									<dt th:text="${sale.attrName}">选择颜色</dt>
-									<dd >
-										<a href="/static/Product/item/#" th:each="attrValue:${#strings.listSplit(sale.attrValue,',')}">
-											<img th:text="${attrValue}" th:src="${ItemVo.info.skuDefaultImg}" />
+									<dt th:text="|选择${sale.attrName}|">选择颜色</dt>
+									<dd th:each="attrValue:${sale.attrValues}">
+										<a class="sku_attr_value" th:attr="skus=${attrValue.skuIds},class=${#lists.contains(#strings.listSplit(attrValue.skuIds,','),ItemVo.info.skuId.toString())?'sku_attr_value checked':'sku_attr_value'}" >
+											<img th:text="${attrValue.attrValue}" th:src="${ItemVo.info.skuDefaultImg}" />
 										</a>
 									</dd>
 								</dl>
@@ -1210,5 +1217,25 @@
 	<script src="/static/Product/item/js/js.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 	</script>
-
+<script>
+	$(".sku_attr_value").click(function () {
+		let skus=new Array();
+		let thisSkus=$(this).attr("skus").split(",");
+		skus.push(thisSkus);
+		$(this).parent().parent().find(".sku_attr_value").removeClass("checked");
+		$("a[class='sku_attr_value checked']").each(function () {
+			skus.push($(this).attr("skus").split(","));
+		})
+		for (let i=1;i<skus.length;i++){
+			thisSkus=$(thisSkus).filter(skus[i]);
+		}
+		let url=location.href.toString().match(/(\S*).html/)[1];
+		url=url.substring(0,url.lastIndexOf("/"));
+		location.href=url+"/"+thisSkus[0]+".html";
+	})
+	$(function(){
+		$(".sku_attr_value").parent().css({"border":"solid 1px #CCC"})
+		$("a[class='sku_attr_value checked']").parent().css({"border":"solid 1px red"})
+	})
+</script>
 </html>

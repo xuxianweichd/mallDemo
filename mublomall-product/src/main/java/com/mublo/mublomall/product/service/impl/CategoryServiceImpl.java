@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-07-07 17:23
+ */
+
 package com.mublo.mublomall.product.service.impl;
 
 import com.alibaba.fastjson.JSON;
@@ -66,16 +73,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         //2、组装成父子的树形结构
         //2.1）、找到所有的一级分类
         return getChildrens(0L, entities);
-
-//        List<CategoryEntity> level1Menus = entities.stream().filter(categoryEntity ->
-//                categoryEntity.getParentCid().equals(0L)
-//        ).map((menu)->{
-//            menu.setChildren(getChildrens(menu.getCatId(),entities));
-//            return menu;
-//        }).sorted(Comparator.comparingInt(menu -> (menu.getSort() == null ? 0 : menu.getSort()))).collect(Collectors.toList());
-////        return (menu1.getSort()==null?0:menu1.getSort()) - (menu2.getSort()==null?0:menu2.getSort());
-//        return menu1.getSort()-menu2.getSort();
-//        return level1Menus;
     }
 
     //递归查找所有菜单的子菜单

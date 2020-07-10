@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-07-07 17:23
+ */
+
 //jqGrid的配置信息
 $.jgrid.defaults.width = 1000;
 $.jgrid.defaults.responsive = true;

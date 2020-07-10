@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2020.
+  ~ 作者：mublo
+  ~ 邮箱：XuXianYu.Transo@outlook.com
+  ~ 日期：2020-07-07 17:23
+  -->
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mublo.mublomall.product.dao.SkuSaleAttrValueDao">
@@ -12,13 +19,33 @@
         <result property="attrValue" column="attr_value"/>
         <result property="attrSort" column="attr_sort"/>
     </resultMap>
-    <select id="getSaleAttrsBySpuId" resultType="com.mublo.mublomall.product.vo.Attr">
-        select pssav.attr_id,pssav.attr_name,group_concat(distinct pssav.attr_value) attrValue
-        from pms_sku_info pki
-        left join pms_sku_sale_attr_value pssav on pki.sku_id = pssav.sku_id
-        where pki.spu_id=#{spuId}
-        group by pssav.attr_id,pssav.attr_name
+<!--    <select id="getSaleAttrsBySpuId" resultType="com.mublo.mublomall.product.vo.Attr">-->
+<!--        select pssav.attr_id,pssav.attr_name,group_concat(distinct pssav.attr_value) attrValue-->
+<!--        from pms_sku_info pki-->
+<!--        left join pms_sku_sale_attr_value pssav on pki.sku_id = pssav.sku_id-->
+<!--        where pki.spu_id=#{spuId}-->
+<!--        group by pssav.attr_id,pssav.attr_name-->
+<!--    </select>-->
+    <resultMap id="SkuSaleAttrVo" type="com.mublo.mublomall.product.vo.SkuSaleAttrVo">
+        <result property="attrId" column="attr_id"></result>
+        <result property="attrName" column="attr_name"></result>
+<!--        <result property="attrValue" column="attr_value"></result>-->
+<!--        <result property="skuIds" column="sku_ids"></result>-->
+        <collection property="attrValues" ofType="com.mublo.mublomall.product.vo.AttrValueWithSkuIdVo">
+            <result property="attrValue" column="attr_value"></result>
+            <result property="skuIds" column="sku_ids"></result>
+        </collection>
+    </resultMap>
+    <select id="getSaleAttrsBySpuId" resultMap="SkuSaleAttrVo">
+        SELECT
+            ssav.attr_id attr_id,
+            ssav.attr_name attr_name,
+            ssav.attr_value,
+            GROUP_CONCAT(DISTINCT info.sku_id) sku_ids
+        FROM pms_sku_info info
+        LEFT JOIN pms_sku_sale_attr_value ssav ON ssav.sku_id=info.sku_id
+        WHERE info.spu_id=#{spuId}
+        GROUP BY ssav.attr_id,ssav.attr_name,ssav.attr_value
     </select>
-
 
 </mapper>

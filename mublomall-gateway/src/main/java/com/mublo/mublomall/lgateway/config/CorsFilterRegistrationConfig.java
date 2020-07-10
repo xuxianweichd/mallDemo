@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-07-07 17:23
+ */
+
 package com.mublo.mublomall.lgateway.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +20,7 @@ import java.util.List;
 /**
  * 跨域过滤器
  *
- * @author seer
+ * @author mublo
  * @date 2018/6/29 10:09
  */
 @Configuration

@@ -1,9 +1,17 @@
+/*
+ * Copyright (c) 2020.
+ * 作者：mublo
+ * 邮箱：XuXianYu.Transo@outlook.com
+ * 日期：2020-07-07 17:23
+ */
+
 package com.mublo.mublomall.product;
 
 import com.sun.xml.internal.bind.v2.TODO;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -103,7 +111,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @MapperScan("com.mublo.mublomall.product.dao")
 @EnableFeignClients("com.mublo.mublomall.product.feign")
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication()
 public class MublomallProductApplication {
     public static void main(String[] args) {
         SpringApplication.run(MublomallProductApplication.class, args);
