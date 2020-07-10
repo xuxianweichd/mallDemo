@@ -52,6 +52,7 @@ public class SmsController {
                 return R.error(BizCodeEnume.SMS_CODE_EXCEPTION.getCode(),BizCodeEnume.SMS_CODE_EXCEPTION.getMsg());
             }
         }
+
         stringRedisTemplate.opsForValue().set(AuthServerConstant.SMS_CODE_CACHE_PREFIX+user.getPhone(),user.getCode()+"_"+System.currentTimeMillis(),user.getTime(), TimeUnit.MINUTES);
 //        Demo短信发送.发送短信HttpTest("17681710805", "0000001", "['亲爱的用户', '注册操作','mublo','3']", "http://test.dev.esandcloud.com");
         CuccSMS.sendSMS(user.getPhone(), "【mublo商城】"+user.getCall()+"您正在进行"+user.getOperationType()+"，您的验证码" + user.getCode() + "，该验证码"+user.getTime()+"分钟内有效，请勿泄漏于他人！", user.getType());
