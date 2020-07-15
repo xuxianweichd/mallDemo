@@ -7,8 +7,13 @@
 
 package com.mublo.mublomall.auth.service;
 
-import com.mublo.common.utils.to.User;
+import com.mublo.common.utils.R;
+import com.mublo.common.utils.constant.messageConstant;
+import com.mublo.common.utils.constant.regExpConstant;
+import com.mublo.common.utils.exectpion.BizCodeEnume;
+import com.mublo.common.utils.to.SmsInfoTo;
 import com.mublo.mublomall.auth.feign.SmsFeign;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +33,14 @@ public class SmsService {
         this.smsFeign = smsFeign;
     }
 
-    public void senCode(String phone) {
-        String code= UUID.randomUUID().toString().substring(0,5);
-        User user=new User(phone,"亲爱的用户","注册操作",code,5,0);
-        smsFeign.reg(user);
+    public R senCode(String phone) {
+        if (StringUtils.isBlank(phone)){
+            return R.error(BizCodeEnume.VALUE_NULL_EXCEPTION.getCode(), messageConstant.nullPhoneMsg);
+        }else if (!phone.matches(regExpConstant.phoneRegExp)){
+            return R.error(BizCodeEnume.VAILD_EXCEPTION.getCode(),messageConstant.errorRegExpPhoneMsg);
+        }
+        String smscCode= UUID.randomUUID().toString().substring(0,5);
+        SmsInfoTo smsInfo=new SmsInfoTo(phone,"亲爱的用户","注册操作",smscCode,5,0);
+        return smsFeign.reg(smsInfo);
     }
-
 }

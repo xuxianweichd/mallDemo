@@ -7,7 +7,8 @@
 
 package com.mublo.mublomall.auth.feign;
 
-import com.mublo.common.utils.to.User;
+import com.mublo.common.utils.R;
+import com.mublo.common.utils.to.SmsInfoTo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,5 +22,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient("mublomall-third-party")
 public interface SmsFeign {
     @PostMapping("/sms/senCode")
-    public String reg(@RequestBody User user);
+    public R reg(@RequestBody SmsInfoTo smsInfo);
 }

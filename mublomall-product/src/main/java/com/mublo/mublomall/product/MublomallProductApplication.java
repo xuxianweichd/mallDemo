@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 //TODO Product开发流程
 /**
  * 1、整合MyBatis-Plus
@@ -109,6 +110,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 
 @MapperScan("com.mublo.mublomall.product.dao")
+@EnableRedisHttpSession
 @EnableFeignClients("com.mublo.mublomall.product.feign")
 @EnableDiscoveryClient
 @SpringBootApplication()

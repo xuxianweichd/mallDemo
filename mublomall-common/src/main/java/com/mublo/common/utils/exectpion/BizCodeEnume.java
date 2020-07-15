@@ -7,10 +7,15 @@
 
 package com.mublo.common.utils.exectpion;
 
+/**
+ *
+ */
 public enum  BizCodeEnume {
     UNKNOW_EXCEPTION(10000,"系统未知异常"),
     VAILD_EXCEPTION(10001,"参数格式效验失败"),
     SMS_CODE_EXCEPTION(10002,"短信发送过于频繁"),
+    VALUE_NULL_EXCEPTION(10003,"值不能为空"),
+    LOGIN_EXCEPTION(10004,"帐号或密码错误"),
     PRODUCT_UP_EXCEPTION(11000,"商品上架异常");
     private int code;
     private String msg;

@@ -10,7 +10,7 @@
 
 <mapper namespace="com.mublo.mublomall.member.dao.MemberLevelDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.mublo.mublomall.member.entity.MemberLevelEntity" id="memberLevelMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
@@ -23,6 +23,9 @@
         <result property="priviledgeBirthday" column="priviledge_birthday"/>
         <result property="note" column="note"/>
     </resultMap>
+    <select id="getDefaultLevel" resultType="java.lang.Long">
+            SELECT level.id FROM ums_member_level level WHERE level.default_status=#{default_status}
+    </select>
 
 
 </mapper>

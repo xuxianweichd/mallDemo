@@ -99,5 +99,16 @@ public class MemberEntity implements Serializable {
 	 * 注册时间
 	 */
 	private Date createTime;
-
+	/**
+	 *第三方授权token
+	 */
+	private String access_token;
+	/**
+	 * 第三方授权token有效时间（秒）
+	 */
+	private String expires_in;
+	/**
+	 * 第三方授权id
+	 */
+	private Long uid;
 }

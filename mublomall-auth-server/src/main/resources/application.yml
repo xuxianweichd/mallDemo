@@ -1,0 +1,18 @@
+#spring:
+#  session:
+#    # Session store type.
+#    # 会话存储处理模式
+#    store-type: redis
+#    redis:
+#      # Sessions flush mode.
+#      # 会话刷新模式 有ON_SAVE、IMMEDIATE，前者是在调用#SessionRepository#save(org.springframework.session.Session)时，在response commit前刷新缓存，#后者是只要有任何更新就会刷新缓存
+#      flush-mode: on_save
+#      # Namespace for keys used to store sessions.
+#      # 用于存储会话键的名称空间
+#      namespace: spring:auth
+#server:
+#  servlet:
+#    session:
+#      # Session timeout. If a duration suffix is not specified, seconds is used.
+#      # 会话超时时间，如果未指定持续时间后缀，则使用秒
+#      timeout: 3600

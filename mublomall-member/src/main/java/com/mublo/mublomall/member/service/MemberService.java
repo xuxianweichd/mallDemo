@@ -9,7 +9,11 @@ package com.mublo.mublomall.member.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mublo.common.utils.PageUtils;
+import com.mublo.common.utils.R;
 import com.mublo.mublomall.member.entity.MemberEntity;
+import com.mublo.mublomall.member.to.LoginTo;
+import com.mublo.mublomall.member.to.RegisterTo;
+import com.mublo.mublomall.member.to.TPOSMicroBlogMandateTo;
 
 import java.util.Map;
 
@@ -23,5 +27,11 @@ import java.util.Map;
 public interface MemberService extends IService<MemberEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    R Register(RegisterTo user);
+
+    R login(LoginTo loginTo);
+
+    MemberEntity TPOSLogin(TPOSMicroBlogMandateTo tposMicroBlogMandateTo);
 }
 

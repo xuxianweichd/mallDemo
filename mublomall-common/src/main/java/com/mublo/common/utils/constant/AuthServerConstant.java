@@ -5,7 +5,7 @@
  * 日期：2020-07-09 19:03
  */
 
-package com.mublo.mublomall.thirdparty.Constant;
+package com.mublo.common.utils.constant;
 
 /**
  * @author: mublo

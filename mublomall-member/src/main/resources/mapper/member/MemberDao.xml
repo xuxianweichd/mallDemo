@@ -31,6 +31,15 @@
         <result property="status" column="status"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
+    <select id="getByPhone" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM ums_member WHERE mobile = #{phone}
+    </select>
+    <select id="getByUsername" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM ums_member WHERE username = #{username}
+    </select>
+    <select id="getMemberInfo" resultType="com.mublo.mublomall.member.entity.MemberEntity">
+        SELECT * FROM ums_member WHERE (mobile =#{username}  OR username=#{username} OR email=#{username})
+    </select>
 
 
 </mapper>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="/static/Auth/login/JD_sass/JD1.css" />
@@ -57,34 +57,47 @@
 						<div></div>
 						请输入账户名和密码
 					</div>
+					<form action="/login" method="post">
 					<ul>
+						<div class="tips" th:text="${errors!=null?(#maps.containsKey(errors,'msg')?errors.msg:''):''}">
+						</div>
 						<li class="top_1">
 							<img src="/static/Auth/login/JD_img/user_03.png" class="err_img1" />
-							<input type="text" placeholder=" 邮箱/用户名/已验证手机" class="user" />
+							<input type="text" placeholder=" 邮箱/用户名/已验证手机" name="username" class="user" />
 						</li>
 						<li>
 							<img src="/static/Auth/login/JD_img/user_06.png" class="err_img2" />
-							<input type="password" placeholder=" 密码" class="password" />
+							<input type="password" placeholder=" 密码" name="password" class="password" />
+							<div class="tips" th:text="${errors!=null?(#maps.containsKey(errors,'password')?errors.password:''):''}">
+							</div>
 						</li>
 						<li class="bri">
 							<a href="/static/Auth/login/">忘记密码</a>
 						</li>
-						<li class="ent"><button class="btn2"><a class="a">登 &nbsp; &nbsp;录</a></button></li>
+						<li class="ent"><button type="submit">登 &nbsp; &nbsp;录</button></li>
 					</ul>
+					</form>
 				</div>
 				<div class="si_out">
 					<ul>
 						<li>
-							<a href="/static/Auth/login/#">
+							<a th:href="${TPOSUrl!=null}?${TPOSUrl.qqUrl}:''">
 								<img src="/static/Auth/login/JD_img/qq.png" />
 								<span>QQ</span>
 							</a>
 						</li>
 						<li class="f4"> | </li>
 						<li>
-							<a href="/static/Auth/login/">
+							<a th:href="${TPOSUrl!=null}?${TPOSUrl.wechatUrl}:''">
 								<img src="/static/Auth/login/JD_img/weixin.png" />
 								<span>微信</span>
+							</a>
+						</li>
+						<li class="f4"> | </li>
+						<li>
+							<a th:href="${TPOSUrl!=null}?${TPOSUrl.microBlogUrl}:''">
+								<img style="width: 2.5vw;height: 1vw" src="/static/Auth/login/JD_img/weibo.png" />
+								<span>微博</span>
 							</a>
 						</li>
 					</ul>
@@ -156,8 +169,6 @@
 				pass.style.border = '1px solid red';
 				err_img1.src = 'JD_img/img11.png';
 				err_img2.src = 'JD_img/img22.png';
-			} else {
-				var a = document.getElementsByClassName("a")[0].href = "http://www.baidu.com";
 			}
 			user.onfocus = function() {
 				err_img1.src = 'JD_img/grow1.png';
