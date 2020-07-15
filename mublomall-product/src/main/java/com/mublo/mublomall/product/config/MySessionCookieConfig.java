@@ -38,7 +38,6 @@ public class MySessionCookieConfig {
         defaultCookieSerializer.setDomainName("mublomall.com");
         return defaultCookieSerializer;
     }
-
     @Bean(initMethod = "")
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         //TODO 带有@autoType关键字的不放反序列化待解决
