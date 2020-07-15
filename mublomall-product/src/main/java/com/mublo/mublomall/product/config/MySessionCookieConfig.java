@@ -18,6 +18,7 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -37,7 +38,7 @@ public class MySessionCookieConfig {
         defaultCookieSerializer.setDomainName("mublomall.com");
         return defaultCookieSerializer;
     }
-    @Bean
+    @Bean(initMethod = "")
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         //TODO 带有@autoType关键字的不放反序列化待解决
 //        return new GenericFastJsonRedisSerializer();
